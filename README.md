@@ -28,3 +28,8 @@
                                           e- minimun element in list
                                           f- maximun element in list
                                           g- delete
+# 4- Sorting :
+              a- Selection Sort
+              b- Merge Sort
+              c- Insertion Sort
+              d- Quick Sort
