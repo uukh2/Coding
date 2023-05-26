@@ -1,14 +1,14 @@
 #include <iostream>
 using namespace std;
 
-struct node
+struct Node
 {
     int data;
-    node* next;
+    Node* next;
 };
 class linkedlist
 {
-    node* head;
+    Node* head;
 public:
     linkedlist()
     {
@@ -22,7 +22,7 @@ public:
 
     bool isfound(int val)
     {
-        node* temp = head;
+        Node* temp = head;
         bool found = false;
         while(temp!=NULL)
         {
@@ -32,26 +32,74 @@ public:
         return false;
     }
 
-    void insert_ele(int val)
+    void insert_First(int newValue)
     {
-        node* newnode = new node;
-        newnode->data = val;
-        if(isempty())
+        Node* newNode = new Node;
+        newNode->data = newValue;
+        if (isempty())
         {
-            newnode->next = NULL;
-            head = newnode;
+            newNode->next = NULL;
+            head = newNode;
         }
         else
         {
-            newnode->next = head;
-            head = newnode;
+            newNode->next = head;
+            head = newNode;
+        }
+    }
+    void insert_Before(int element, int newValue)
+    {
+        if (isempty())
+        {
+            insert_First(newValue);
+        }
+        else
+        {
+            if (isfound(element))
+            {
+                if (head->data == element)
+                {
+                    insert_First(newValue);
+                }
+                else
+                {
+                    Node* newNode = new Node();
+                    newNode->data = newValue;
+
+                    Node* temp = head;
+                    while (temp != NULL && temp->next->data != element)temp = temp->next;
+                    newNode->next = temp->next;
+                    temp->next = newNode;
+                }
+            }
+            else cout << "Element is not found.\n" ;
+        }
+    }
+
+    void insert_Last(int newValue)
+    {
+        if (isempty())
+            insert_First(newValue);
+        else
+        {
+            Node* newNode = new Node();
+            newNode->data = newValue;
+
+            Node* temp = head;
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            newNode->next = NULL;
+            temp->next = newNode;
+
         }
     }
 
     void delete_ele(int val)
     {
-        node* delptr1 = head;
-        node* delptr2 = head;
+        Node* delptr1 = head;
+        Node* delptr2 = head;
         if(isempty())
         {
             cout<<"List is Empty."<<'\n';
@@ -77,7 +125,7 @@ public:
 
     int counter()
     {
-        node* temp = head;
+        Node* temp = head;
         int counter=0;
         while(temp!=NULL)
         {
@@ -91,13 +139,13 @@ public:
     {
         if(isempty())
         {
-            cout<<"";
+            cout<<"List is empty\n";
             return;
         }
         else
         {
             cout<<"This is elements in Linkedlist : [ ";
-            node* temp = head;
+            Node* temp = head;
             while(temp!=NULL)
             {
                 cout<<temp->data<<" ";
@@ -111,17 +159,25 @@ public:
 int main()
 {
     linkedlist l;
-    int val,num;
+    int val,num,el;
     for(int i=0; i<4; i++)
     {
-        cout<<"enter a number "<<i+1<<" : ";
+        cout<<"Enter number to add in this list "<<i+1<<" : ";
         cin>>val;
-        l.insert_ele(val);
+        l.insert_First(val);
     }
     cout << "Enter element to be delete : ";
     cin>>num;
     l.delete_ele(num);
+    cout<<"This is elements after delete : ";
     l.display();
-    cout<<"the number of elements = "<<l.counter()<<'\n';
+    cout<<"Enter element you need insert before his : ";
+    cin>>el;
+    cout<<"Enter value to insert before this element : ";
+    cin>>num;
+    l.insert_Before(el,num);
+    cout<<"This is elements after insert : \n";
+    l.display();
+    cout<<"The number of elements = "<<l.counter()<<'\n';
     return 0;
 }
