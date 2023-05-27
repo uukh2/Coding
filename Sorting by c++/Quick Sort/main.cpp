@@ -1,5 +1,4 @@
 #include <iostream>
-
 using namespace std;
 
 int partitioning1(int arr[], int start, int endd)
